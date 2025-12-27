@@ -36,7 +36,7 @@ let notes = [
 app.use(cors())
 app.use(express.json());
 app.use(requestLogger);
-app.use(express.static('dist'));
+app.use(express.static('/dist'));
 
 app.get('/api/notes', (request, response) => {
   response.json(notes)
