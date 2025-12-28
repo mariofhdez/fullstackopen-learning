@@ -1,11 +1,10 @@
+require('dotenv').config()
+
 const express = require('express');
 const cors = require('cors');
-const mongoose = require('mongoose');
 
 const app = express();
-const password = process.argv[2]
-
-const url = `mongodb+srv://marioflorez249_db_user:${password}@fullstackopen.lzvzwhu.mongodb.net/?appName=fullstackopen`
+const Note = require('./models/note')
 
 const requestLogger = (request, response, next) => {
   console.log('Method:', request.method);
@@ -101,23 +100,3 @@ const unknownEndpoint = (request, response) => {
 }
 
 app.use(unknownEndpoint)
-
-// Database connection
-mongoose.set('strictQuery', false)
-mongoose.connect(url)
-
-const noteSchema = new mongoose.Schema({
-  content: String,
-  important: Boolean
-})
-
-const Note = mongoose.model('Note', noteSchema)
-
-// toJson configuration
-noteSchema.set('toJSON', {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString()
-    delete returnedObject._id
-    delete returnedObject.__v
-  }
-})
