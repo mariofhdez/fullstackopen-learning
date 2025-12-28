@@ -48,41 +48,59 @@ app.get('/api/notes', (request, response) => {
   })
 });
 
-app.get('/api/notes/:id', (req, res) => {
-  const id = Number(req.params.id)
-  const note = notes.find(note => note.id === id)
+app.get('/api/notes/:id', (req, res, next ) => {
+  const id = req.params.id
+  Note.findById(id).then(note => {
+      if(note){
+        res.json(note)
+      } else {
+        res.status(404).end()
+      }
+      
+    }).catch(error => next(error))
   
-  if(note){
-    res.json(note)
-  } else {
-    res.status(404).end()
-  }
 })
 
 app.delete('/api/notes/:id', (req, res) =>{
   const id = req.params.id
-  notes = notes.filter(note => note.id !== id)
-  res.status(204).end()
+  Note.findByIdAndDelete(id).then(result => {
+    res.status(204).end()
+  })
+  .catch(error => next(error))
 })
 
 app.post('/api/notes', (req, res) => {
   const body = req.body
   
-  if(!body.content) {
+  if(body.content === undefined) {
     return res.status(400).json({
       error: 'content missing'
     })
   }
   
-  const note = {
+  const note = new Note({
     content: body.content,
     important: Boolean(body.important) || false,
-    id: generateId()
-  }
+  })
   
-  notes = notes.concat(note)
-  console.log(note);
-  res.json(note);
+  note.save().then(savedNote => {
+    res.json(savedNote);
+  })
+})
+
+app.put('/api/notes/:id', (req, res, next) => {
+  const body = req.body
+
+  const newNote = {
+    content: body.content,
+    important: body.important,
+  }
+
+  Note.findByIdAndUpdate(req.params.id, newNote, { new: true })
+    .then(updatedNote => {
+      res.json(updatedNote)
+    })
+    .catch(error => next(error))
 })
 
 const PORT = process.env.PORT || 3001;
@@ -90,13 +108,23 @@ app.listen(PORT, ()=> {
   console.log(`Server running on port ${PORT}`);
 });
 
-function generateId() {
-  const maxId = notes.length > 0 ? Math.max(...notes.map(n => n.id)) : 0;
-  return maxId + 1;
-}
+// function generateId() {
+//   const maxId = notes.length > 0 ? Math.max(...notes.map(n => n.id)) : 0;
+//   return maxId + 1;
+// }
 
 const unknownEndpoint = (request, response) => {
   response.status(404).send({error: 'unknown endpoint'})
 }
 
 app.use(unknownEndpoint)
+
+const errorHandler = (error, req, res, next) => {
+  console.log(error.message);
+
+  if (error.name === 'CastError') {
+    return res.status(400).send({ error: 'malformatted id'})
+  }
+}
+
+app.use(errorHandler)

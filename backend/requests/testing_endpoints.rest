@@ -1,3 +1,23 @@
 GET http://localhost:3001/api/notes
 ###
 GET http://localhost:3001/info
+###
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+
+{
+    "content": "Ensure that everything still works",
+    "important": true
+}
+###
+GET http://localhost:3001/api/notes/695165bc7e1599e445b05ab7
+###
+DELETE http://localhost:3001/api/notes/695165bc7e1599e445b05ab7
+###
+PUT http://localhost:3001/api/notes/69519a69982673d2e757ec3d
+Content-Type: application/json
+
+{
+    "content": "Ensure that everything still works another time",
+    "important": false
+}
