@@ -1,6 +1,11 @@
 const express = require('express');
-const cors = require('cors')
+const cors = require('cors');
+const mongoose = require('mongoose');
+
 const app = express();
+const password = process.argv[2]
+
+const url = `mongodb+srv://marioflorez249_db_user:${password}@fullstackopen.lzvzwhu.mongodb.net/?appName=fullstackopen`
 
 const requestLogger = (request, response, next) => {
   console.log('Method:', request.method);
@@ -39,13 +44,15 @@ app.use(requestLogger);
 app.use(express.static('dist'));
 
 app.get('/api/notes', (request, response) => {
-  response.json(notes)
+  Note.find({}).then(notes => {
+    response.json(notes)
+  })
 });
 
 app.get('/api/notes/:id', (req, res) => {
   const id = Number(req.params.id)
   const note = notes.find(note => note.id === id)
-
+  
   if(note){
     res.json(note)
   } else {
@@ -61,19 +68,19 @@ app.delete('/api/notes/:id', (req, res) =>{
 
 app.post('/api/notes', (req, res) => {
   const body = req.body
-
+  
   if(!body.content) {
     return res.status(400).json({
       error: 'content missing'
     })
   }
-
+  
   const note = {
     content: body.content,
     important: Boolean(body.important) || false,
     id: generateId()
   }
-
+  
   notes = notes.concat(note)
   console.log(note);
   res.json(note);
@@ -89,9 +96,28 @@ function generateId() {
   return maxId + 1;
 }
 
-
 const unknownEndpoint = (request, response) => {
   response.status(404).send({error: 'unknown endpoint'})
 }
 
 app.use(unknownEndpoint)
+
+// Database connection
+mongoose.set('strictQuery', false)
+mongoose.connect(url)
+
+const noteSchema = new mongoose.Schema({
+  content: String,
+  important: Boolean
+})
+
+const Note = mongoose.model('Note', noteSchema)
+
+// toJson configuration
+noteSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+    delete returnedObject.__v
+  }
+})
