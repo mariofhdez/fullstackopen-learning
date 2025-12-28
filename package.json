@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/mariofhdez/fullstackopen-learning/issues"
   },
-  "homepage": "https://github.com/mariofhdez/fullstackopen-learning#readme"
+  "homepage": "https://github.com/mariofhdez/fullstackopen-learning#readme",
+  "dependencies": {
+    "mongoose": "^9.0.2"
+  }
 }
