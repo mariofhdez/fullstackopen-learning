@@ -6,7 +6,8 @@
   "scripts": {
     "build": "cd ./backend && npm install",
     "start": "cd ./backend && node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -19,5 +20,10 @@
   "bugs": {
     "url": "https://github.com/mariofhdez/fullstackopen-learning/issues"
   },
-  "homepage": "https://github.com/mariofhdez/fullstackopen-learning#readme"
+  "homepage": "https://github.com/mariofhdez/fullstackopen-learning#readme",
+  "devDependencies": {
+    "@stylistic/eslint-plugin": "^5.6.1",
+    "eslint": "^9.39.2",
+    "globals": "^16.5.0"
+  }
 }
