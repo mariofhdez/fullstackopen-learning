@@ -1,60 +1,61 @@
-const notesRouter = require('express').Router();
-const Note = require('../models/note')
+const notesRouter = require("express").Router();
+const Note = require("../models/note");
 
-notesRouter.get('/', (req, res) => {
-  Note.find({}).then(notes => {
-    res.json(notes)
-  })
+notesRouter.get("/", async (req, res) => {
+  const notes = await Note.find({});
+  res.json(notes);
 });
 
-notesRouter.get('/:id', (req, res, next ) => {
-  const id = req.params.id
-  Note.findById(id).then(note => {
-      if(note){
-        res.json(note)
+notesRouter.get("/:id", (req, res, next) => {
+  const id = req.params.id;
+  Note.findById(id)
+    .then((note) => {
+      if (note) {
+        res.json(note);
       } else {
-        res.status(404).end()
+        res.status(404).end();
       }
-      
-    }).catch(error => next(error))
-  
-})
+    })
+    .catch((error) => next(error));
+});
 
-notesRouter.post('/', (req, res, next) => {
-  const body = req.body
-  
+notesRouter.post("/", (req, res, next) => {
+  const body = req.body;
+
   const note = new Note({
     content: body.content,
     important: Boolean(body.important) || false,
-  })
-  
-  note.save()
-    .then(savedNote => {
-        res.json(savedNote);
+  });
+
+  note
+    .save()
+    .then((savedNote) => {
+      res.status(201).json(savedNote);
     })
-    .catch(error => next(error))
-})
+    .catch((error) => next(error));
+});
 
-notesRouter.delete('/:id', (req, res, next) =>{
-  const id = req.params.id
-  Note.findByIdAndDelete(id).then(() => {
-    res.status(204).end()
-  })
-  .catch(error => next(error))
-})
+notesRouter.delete("/:id", (req, res, next) => {
+  const id = req.params.id;
+  Note.findByIdAndDelete(id)
+    .then(() => {
+      res.status(204).end();
+    })
+    .catch((error) => next(error));
+});
 
-notesRouter.put('/:id', (req, res, next) => {
-  const { content, important } = req.body
+notesRouter.put("/:id", (req, res, next) => {
+  const { content, important } = req.body;
 
   Note.findByIdAndUpdate(
-    req.params.id, 
-    {content, important}, 
-    { new: true, runValidators: true, context:'query' }
+    req.params.id,
+    { content, important },
+    { new: true, runValidators: true, context: "query" }
   )
-    .then(updatedNote => {
-      res.json(updatedNote)
+    .then((updatedNote) => {
+      res.json(updatedNote);
     })
-    .catch(error => next(error))
-})
+    .catch((error) => next(error));
+});
 
-module.exports = notesRouter
+module.exports = notesRouter;
