@@ -23,6 +23,7 @@
   "homepage": "https://github.com/mariofhdez/fullstackopen-learning#readme",
   "devDependencies": {
     "@stylistic/eslint-plugin": "^5.6.1",
+    "cross-env": "^10.1.0",
     "eslint": "^9.39.2",
     "globals": "^16.5.0"
   }
