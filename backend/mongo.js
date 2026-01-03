@@ -7,7 +7,7 @@ if (process.argv.length < 3) {
 
 const password = process.argv[2]
 
-const url = `mongodb+srv://marioflorez249_db_user:${password}@fullstackopen.lzvzwhu.mongodb.net/?appName=fullstackopen`
+const url = `mongodb+srv://marioflorez249_db_user:${password}@fullstackopen.lzvzwhu.mongodb.net/testNoteApp?appName=fullstackopen`
 
 mongoose.set('strictQuery', false)
 
@@ -21,8 +21,8 @@ const noteSchema = new mongoose.Schema({
 const Note = mongoose.model('Note', noteSchema)
 
 const note = new Note ({
-    content: "Callback-functions sucks",
-    important: false,
+    content: "Supertest is a library for testing HTTP servers",
+    important: true,
 })
 
 note.save().then(result => {
