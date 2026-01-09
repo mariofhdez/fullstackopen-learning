@@ -6,11 +6,12 @@ POST http://localhost:3001/api/notes
 Content-Type: application/json
 
 {
-    "content": "Ensure that everything still works",
-    "important": true
+    "content": "User id of the note creator is at the start sent along the request",
+    "important": true,
+    "userId": "696142e0374fbcd843a95c3f"
 }
 ###
-GET http://localhost:3001/api/notes/695150d262d291bce58833a2
+GET http://localhost:3001/api/notes/6956b0a0a1e5c7d7d5353d18
 ###
 DELETE http://localhost:3001/api/notes/6956b0a0a1e5c7d7d5353d18
 ###
@@ -20,4 +21,16 @@ Content-Type: application/json
 {
     "content": "Ensure that everything still works another time",
     "important": false
+}
+
+###
+GET http://localhost:3001/api/users
+###
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+{
+    "username": "mario",
+    "name": "mario F.",
+    "password": "851d6s15"
 }
