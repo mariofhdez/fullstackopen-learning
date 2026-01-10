@@ -4,7 +4,6 @@ GET http://localhost:3001/info
 ###
 POST http://localhost:3001/api/notes
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1hcmlvIiwiaWQiOiI2OTYxNDJlMDM3NGZiY2Q4NDNhOTVjM2YiLCJpYXQiOjE3NjgwMDUwOTB9.gIyuNA9RPVH304qlXmlFknhSD5-lj11B2RkyMyc6klA
 
 {
     "content": "A new note with authentication by jwt",
@@ -31,8 +30,7 @@ Content-Type: application/json
 
 {
     "username": "mario",
-    "name": "mario F.",
-    "password": "851d6s15"
+    "name": "mario F."
 }
 ###
 POST http://localhost:3001/api/login
