@@ -4,11 +4,11 @@ GET http://localhost:3001/info
 ###
 POST http://localhost:3001/api/notes
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1hcmlvIiwiaWQiOiI2OTYxNDJlMDM3NGZiY2Q4NDNhOTVjM2YiLCJpYXQiOjE3NjgwMDUwOTB9.gIyuNA9RPVH304qlXmlFknhSD5-lj11B2RkyMyc6klA
 
 {
-    "content": "User id of the note creator is at the start sent along the request",
-    "important": true,
-    "userId": "696142e0374fbcd843a95c3f"
+    "content": "A new note with authentication by jwt",
+    "important": true
 }
 ###
 GET http://localhost:3001/api/notes/6956b0a0a1e5c7d7d5353d18
