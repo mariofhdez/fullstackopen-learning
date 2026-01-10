@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 
-import Note from './components/Note'
 import noteService from './services/notes'
+import loginService from './services/login'
+
+import Note from './components/Note'
 import Notification from './components/Notification'
 import Footer from './components/Footer'
 
@@ -10,7 +12,10 @@ const App = (props) => {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
-  const [errorMessage, setErrorMessage] = useState('Some error happened...')
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
 
@@ -60,11 +65,63 @@ const App = (props) => {
 
   const notesToshow = showAll ? notes : notes.filter(note => note.important)
 
+  const handleLogin = async (event) => {
+    event.preventDefault()
+    try {
+      const user = await loginService.login({ username, password })
+      setUser(user)
+      setUsername('')
+      setPassword('')
+    } catch (error) {
+      setErrorMessage('Wrong credentials')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+    console.log('logging in with', username, password);
+  }
+
+  const loginForm = () => (
+    <form onSubmit={handleLogin}>
+      <div>
+        username
+        <input
+          type="text"
+          value={username}
+          name='Username'
+          onChange={({ target }) => setUsername(target.value)} />
+      </div>
+      <div>
+        password
+        <input
+          type="password"
+          value={password}
+          name='Password'
+          onChange={({ target }) => setPassword(target.value)} />
+      </div>
+      <button type="submit">login</button>
+    </form>
+  )
+
+  const noteForm = () => (
+    <form onSubmit={addNote}>
+      <input type="text" placeholder='Type your note' value={newNote} onChange={handleNoteChange} />
+      <button type="submit">Save</button>
+    </form>
+  )
+
   return (
     <div>
       <h1>Notes</h1>
       <Notification message={errorMessage} />
+      {user === null ? loginForm() :
+        <div>
+          <p>{user.name}</p>
+          {noteForm()}
+        </div>
+      }
       <div>
+        <br></br>
         <button onClick={() => setShowAll(!showAll)}>
           Show {showAll ? 'Important' : ' All'}
         </button>
@@ -78,13 +135,11 @@ const App = (props) => {
           />
         )}
       </ul>
-      <form onSubmit={addNote}>
-        <input type="text" placeholder='Type your note' value={newNote} onChange={handleNoteChange} />
-        <button type="submit">Save</button>
-      </form>
       <Footer />
     </div>
   )
+
+
 }
 
 export default App
