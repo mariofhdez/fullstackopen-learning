@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 import noteService from './services/notes'
 import loginService from './services/login'
@@ -12,6 +12,8 @@ import Footer from './components/Footer'
 
 
 const App = () => {
+  const noteFormRef = useRef()
+
   const [notes, setNotes] = useState([])
   const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState(null)
@@ -60,6 +62,7 @@ const App = () => {
     try {
       const savedNote = await noteService.create(noteObject)
       setNotes(notes.concat(savedNote))
+      noteFormRef.current.toggleVisibility()
     } catch (error) {
       console.error('Error adding note',error);
     }
@@ -101,7 +104,7 @@ const App = () => {
   )
 
   const noteForm = () => (
-    <Togglable buttonLabel="new note">
+    <Togglable buttonLabel="new note" ref={noteFormRef}>
       <NoteForm
         createNote={addNote}
       />
