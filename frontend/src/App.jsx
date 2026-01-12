@@ -11,9 +11,8 @@ import Notification from './components/Notification'
 import Footer from './components/Footer'
 
 
-const App = (props) => {
+const App = () => {
   const [notes, setNotes] = useState([])
-  const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState(null)
   const [username, setUsername] = useState('')
@@ -56,23 +55,14 @@ const App = (props) => {
       })
   }
 
-  const addNote = (event) => {
-    event.preventDefault()
-    const noteObject = {
-      content: newNote,
-      important: Math.random() < 0.5,
+  const addNote = async (noteObject) => {
+
+    try {
+      const savedNote = await noteService.create(noteObject)
+      setNotes(notes.concat(savedNote))
+    } catch (error) {
+      console.error('Error adding note',error);
     }
-
-    noteService
-      .create(noteObject)
-      .then(returnedNote => {
-        setNotes(notes.concat(returnedNote))
-        setNewNote('')
-      })
-  }
-
-  const handleNoteChange = (event) => {
-    setNewNote(event.target.value)
   }
 
   const notesToshow = showAll ? notes : notes.filter(note => note.important)
@@ -112,10 +102,8 @@ const App = (props) => {
 
   const noteForm = () => (
     <Togglable buttonLabel="new note">
-      <NoteForm 
-        handleSubmit={addNote}
-        value={newNote}
-        handleChange={handleNoteChange}
+      <NoteForm
+        createNote={addNote}
       />
     </Togglable>
   )
