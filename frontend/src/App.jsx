@@ -3,12 +3,14 @@ import { useState, useEffect } from 'react'
 import noteService from './services/notes'
 import loginService from './services/login'
 
+import LoginForm from './components/LoginForm'
 import Note from './components/Note'
 import Notification from './components/Notification'
 import Footer from './components/Footer'
 
 
 const App = (props) => {
+  const [loginVisible, setLoginVisible] = useState(false)
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
@@ -25,6 +27,15 @@ const App = (props) => {
         setNotes(initialNotes)
       })
   }, [])
+
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
+    if(loggedUserJSON){
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+      noteService.setToken(user.token)
+    }
+  },[])
 
   const toggleImportanceOf = (id) => {
     const note = notes.find(n => n.id === id)
@@ -69,6 +80,11 @@ const App = (props) => {
     event.preventDefault()
     try {
       const user = await loginService.login({ username, password })
+
+      window.localStorage.setItem(
+        'loggedNoteappUser', JSON.stringify(user)
+      )
+
       noteService.setToken(user.token)
       setUser(user)
       setUsername('')
@@ -79,30 +95,29 @@ const App = (props) => {
         setErrorMessage(null)
       }, 5000)
     }
-    console.log('logging in with', username, password);
   }
 
-  const loginForm = () => (
-    <form onSubmit={handleLogin}>
+  const loginForm = () => {
+    const hideWhenVisible = { display: loginVisible ? 'none' : ''}
+    const showWhenVisible = { display: loginVisible ? '' : 'none'}
+    return  (
       <div>
-        username
-        <input
-          type="text"
-          value={username}
-          name='Username'
-          onChange={({ target }) => setUsername(target.value)} />
+        <div style={hideWhenVisible}>
+          <button onClick={() => setLoginVisible(true)}>log in</button>
+        </div>
+        <div style={showWhenVisible}>
+          <LoginForm
+            username={username}
+            password={password}
+            handleUsernameChange={({ target }) => setUsername(target.value)}
+            handlePasswordChange={({ target }) => setPassword(target.value)}
+            handleSubmit={handleLogin}
+          />
+          <button onClick={() => setLoginVisible(false)} >cancel</button>
+        </div>
       </div>
-      <div>
-        password
-        <input
-          type="password"
-          value={password}
-          name='Password'
-          onChange={({ target }) => setPassword(target.value)} />
-      </div>
-      <button type="submit">login</button>
-    </form>
   )
+}
 
   const noteForm = () => (
     <form onSubmit={addNote}>
