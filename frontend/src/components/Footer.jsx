@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <div style={footerStyle}>
       <br />
-      <em>Note app, Mario florez 2025</em>
+      <em>Note app, Mario Flórez - 2025</em>
     </div>
   )
 }
