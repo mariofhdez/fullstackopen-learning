@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import NoteForm from '../components/NoteForm'
+import NoteForm from '../../components/NoteForm'
 import userEvent from '@testing-library/user-event'
 
 test('<NoteForm /> updates parent state and calls onSubmit', async () => {

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import Togglable from '../components/Togglable'
+import Togglable from '../../components/Togglable'
 
 describe('<Togglable />', () => {
   let container
