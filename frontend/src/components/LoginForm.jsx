@@ -6,6 +6,7 @@ const LoginForm = (props) => {
         <div>
           username
           <input
+            data-testid="username"
             type="text"
             value={props.username}
             name="Username"
@@ -15,6 +16,7 @@ const LoginForm = (props) => {
         <div>
           password
           <input
+            data-testid="password"
             type="password"
             value={props.password}
             name="Password"

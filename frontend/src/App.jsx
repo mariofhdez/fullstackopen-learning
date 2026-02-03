@@ -114,7 +114,7 @@ const App = () => {
         loginForm()
       ) : (
         <div>
-          <p>{user.name}</p>
+          <p>User '{user.name}' logged in</p>
           {noteForm()}
         </div>
       )}
