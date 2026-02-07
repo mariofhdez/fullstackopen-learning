@@ -27,5 +27,8 @@
     "cross-env": "^10.1.0",
     "eslint": "^9.39.2",
     "globals": "^16.5.0"
+  },
+  "dependencies": {
+    "redux": "^5.0.1"
   }
 }
