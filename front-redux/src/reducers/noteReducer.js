@@ -22,7 +22,7 @@ export const createNote = (content) => {
     payload: {
       content,
       important: false,
-      id: generateId,
+      id: generateId(),
     },
   };
 };
@@ -34,6 +34,6 @@ export const toggleImportanceOf = (id) => {
   };
 };
 
-export const generateId = () => Number((Math.random() * 1000000).toFixed(0));
+const generateId = () => Number((Math.random() * 1000000).toFixed(0));
 
 export default noteReducer;
