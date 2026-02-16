@@ -5,7 +5,7 @@ const NoteForm = () => {
   const dispatch = useDispatch();
 
   const addNote = (e) => {
-    e.preventDefault();
+    e.prevent.Default();
     const content = e.target.note.value;
     e.target.note.value = "";
     dispatch(createNote(content));
