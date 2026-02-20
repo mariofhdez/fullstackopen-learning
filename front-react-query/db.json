@@ -13,11 +13,31 @@
     {
       "id": "c47c",
       "content": "this is a new note with json db",
-      "important": false
+      "important": true
     },
     {
       "id": "c73c",
       "content": "Let's see if it works",
+      "important": true
+    },
+    {
+      "id": "bd12",
+      "content": "A new mutation note",
+      "important": true
+    },
+    {
+      "id": "e4ad",
+      "content": "optimizing the note app",
+      "important": true
+    },
+    {
+      "id": "44f4",
+      "content": "another test",
+      "important": true
+    },
+    {
+      "id": "287f",
+      "content": "second one",
       "important": false
     }
   ]
