@@ -1,11 +1,17 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import { Home, Note, Notes, Users } from './main'
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom'
+import { Home, Login, Note, Notes, Users } from './main'
 import { useEffect, useState } from 'react'
 
 import noteService from './services/notes'
 
 const App = () => {
+  const [user, setUser] = useState(null)
   const [notes, setNotes] = useState([])
+
+  const login = (user) => {
+    setUser(user)
+  }
+
   useEffect(() => {
     noteService.getAll().then((result) => setNotes(result))
   }, [])
@@ -26,12 +32,19 @@ const App = () => {
         <Link style={padding} to="/users">
           users
         </Link>
+        {user
+          ? <em>`${user} logged`</em>
+          : ''
+        }
+
+
       </div>
 
       <Routes>
         <Route path="/notes/:id" element={<Note notes={notes} />} />
         <Route path="/notes" element={<Notes notes={notes} />} />
-        <Route path="/users" element={<Users />} />
+        <Route path="/users" element={user ? <Users /> : <Navigate replace to='/login' />} />
+        <Route path='/login' element={<Login onLogin={login} />}/>
         <Route path="/" element={<Home />} />
       </Routes>
 

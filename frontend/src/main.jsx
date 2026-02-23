@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client'
 import App from './App'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
 export const Home = () => {
   return (
@@ -43,6 +43,30 @@ export const Users = () => {
   return (
     <div>
       <h2>Users</h2>
+    </div>
+  )
+}
+
+export const Login = (props) => {
+  const navigate = useNavigate()
+
+  const onSubmit = (e) => {
+    e.preventDefault()
+    props.onLogin('admin')
+    navigate('/')
+  }
+  return (
+    <div>
+      <h2>login</h2>
+      <form onSubmit={onSubmit}>
+        <div>
+          username: <input type="text" />
+        </div>
+        <div>
+          password: <input type="password" name="" id="" />
+        </div>
+        <button type="submit">login</button>
+      </form>
     </div>
   )
 }
