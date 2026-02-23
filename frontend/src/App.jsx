@@ -33,8 +33,8 @@ const App = () => {
           users
         </Link>
         {user
-          ? <em>`${user} logged`</em>
-          : ''
+          ? <em>`{user} logged`</em>
+          : <Link style={padding} to='/login' >login</Link>
         }
 
 
@@ -48,9 +48,10 @@ const App = () => {
         <Route path="/" element={<Home />} />
       </Routes>
 
-      <div>
-        <i>Note app, Department of Computer Science 2024</i>
-      </div>
+      <footer>
+        <br />
+        <em>Note app, Department of Computer Science 2024</em>
+      </footer>
     </Router>
   )
 }
