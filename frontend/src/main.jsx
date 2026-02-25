@@ -1,6 +1,9 @@
 import ReactDOM from 'react-dom/client'
 import App from './App'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Link,
+  useNavigate} from 'react-router-dom'
 
 export const Home = () => {
   return (
@@ -25,9 +28,8 @@ export const Notes = ({ notes }) => {
   )
 }
 
-export const Note = ({ notes }) => {
-  const id = useParams().id
-  const note = notes.find((n) => n.id === id)
+export const Note = ({ note }) => {
+  console.log(note)
   return (
     <div>
       <h2>{note.content}</h2>
@@ -71,4 +73,8 @@ export const Login = (props) => {
   )
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App />)
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <Router>
+    <App />
+  </Router>
+)
