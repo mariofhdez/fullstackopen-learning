@@ -11,8 +11,22 @@ import {
   TableContainer,
   TableRow,
   TextField,
-  Button
 } from '@mui/material'
+
+import styled from 'styled-components'
+
+export const Button = styled.button`
+  background: Bisque;
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid Chocolate;
+  border-radius: 3px;
+`
+
+const Input = styled.input`
+  margin: 0.25em;
+`
 
 export const Home = () => {
   return (
@@ -86,8 +100,14 @@ export const Login = (props) => {
     <div>
       <h2>login</h2>
       <form onSubmit={onSubmit}>
-        <TextField label="username" type="text" name="username" />
-        <TextField label="password" type="password" name="password" />
+        <div>
+          username:
+          <Input label="username" type="text" name="username" />
+        </div>
+        <div>
+          password:
+          <Input label="password" type="password" name="password" />
+        </div>
         <Button variant="contained" color="primary" type="submit">
           login
         </Button>

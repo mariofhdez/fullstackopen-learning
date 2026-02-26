@@ -1,22 +1,27 @@
-import {
-  Routes,
-  Route,
-  Link,
-  Navigate,
-  useMatch,
-} from 'react-router-dom'
-import { Home, Login, Note, Notes, Users } from './main'
+import { Routes, Route, Link, Navigate, useMatch } from 'react-router-dom'
+import { Button, Home, Login, Note, Notes, Users } from './main'
 import { useEffect, useState } from 'react'
 
 import noteService from './services/notes'
-import {
-  Alert,
-  AppBar,
-  Button,
-  Container,
-  IconButton,
-  Toolbar,
-} from '@mui/material'
+import { Alert, AppBar, Container, IconButton, Toolbar } from '@mui/material'
+
+import styled from 'styled-components'
+
+const Page = styled.div`
+  padding: 1em;
+  background: papayawhip;
+`
+
+const Navigation = styled.div`
+  background: BurlyWood;
+  padding: 1em;
+`
+
+const Footer = styled.div`
+  background: Chocolate;
+  padding: 1em;
+  margin-top: 1em;
+`
 
 const App = () => {
   const [user, setUser] = useState(null)
@@ -45,25 +50,27 @@ const App = () => {
   }
 
   return (
-    <Container>
+    <Page>
       {message && <Alert severity="success">{message}</Alert>}
-      <AppBar position="static">
-        <IconButton edge="start" color="inherit" aria-label="menu"></IconButton>
-        <Toolbar>
-          <Button color="inherit" component={Link}>
-            home
-          </Button>
-          <Button color="inherit" component={Link}>
-            notes
-          </Button>
-          <Button color="inherit" component={Link}>
-            users
-          </Button>
-          <Button color="inherit" component={Link}>
-            {user ? <em>{user} logged</em> : login}
-          </Button>
-        </Toolbar>
-      </AppBar>
+
+      <Navigation>
+        <Link style={padding} to="/">
+          home
+        </Link>
+        <Link style={padding} to="/notes">
+          notes
+        </Link>
+        <Link style={padding} to="/users">
+          users
+        </Link>
+        {user ? (
+          <em>`{user} logged`</em>
+        ) : (
+          <Link style={padding} to="/login">
+            login
+          </Link>
+        )}
+      </Navigation>
 
       <Routes>
         <Route path="/notes/:id" element={<Note note={note} />} />
@@ -76,11 +83,11 @@ const App = () => {
         <Route path="/" element={<Home />} />
       </Routes>
 
-      <footer>
+      <Footer>
         <br />
         <em>Note app, Department of Computer Science 2024</em>
-      </footer>
-    </Container>
+      </Footer>
+    </Page>
   )
 }
 
