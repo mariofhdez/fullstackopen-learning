@@ -1,9 +1,18 @@
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter as Router, Link, useNavigate } from 'react-router-dom'
-import { Button, Form, Table } from 'react-bootstrap'
 
 import './index.css'
 import App from './App'
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  TextField,
+  Button
+} from '@mui/material'
 
 export const Home = () => {
   return (
@@ -26,18 +35,20 @@ export const Notes = ({ notes }) => {
   return (
     <div>
       <h2>Notes</h2>
-      <Table striped>
-        <tbody>
-          {notes.map((note) => (
-            <tr key={note.id}>
-              <td>
-                <Link to={`/notes/${note.id}`}>{note.content}</Link>
-              </td>
-              <td>{note.user.username}</td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableBody>
+            {notes.map((note) => (
+              <TableRow key={note.id}>
+                <TableCell>
+                  <Link to={`/notes/${note.id}`}>{note.content}</Link>
+                </TableCell>
+                <TableCell>{note.user.username}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   )
 }
@@ -74,17 +85,13 @@ export const Login = (props) => {
   return (
     <div>
       <h2>login</h2>
-      <Form onSubmit={onSubmit}>
-        <Form.Group>
-          <Form.Label>username:</Form.Label>
-          <Form.Control type="text" name='username' />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>password:</Form.Label>
-          <Form.Control type="password" name="password" />
-        </Form.Group>
-        <Button variant='primary' type="submit">login</Button>
-      </Form>
+      <form onSubmit={onSubmit}>
+        <TextField label="username" type="text" name="username" />
+        <TextField label="password" type="password" name="password" />
+        <Button variant="contained" color="primary" type="submit">
+          login
+        </Button>
+      </form>
     </div>
   )
 }

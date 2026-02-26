@@ -1,5 +1,4 @@
 import {
-  BrowserRouter as Router,
   Routes,
   Route,
   Link,
@@ -10,7 +9,14 @@ import { Home, Login, Note, Notes, Users } from './main'
 import { useEffect, useState } from 'react'
 
 import noteService from './services/notes'
-import { Alert, Nav, Navbar } from 'react-bootstrap'
+import {
+  Alert,
+  AppBar,
+  Button,
+  Container,
+  IconButton,
+  Toolbar,
+} from '@mui/material'
 
 const App = () => {
   const [user, setUser] = useState(null)
@@ -39,39 +45,25 @@ const App = () => {
   }
 
   return (
-    <div className="container">
-      {message && <Alert variant="success">{message}</Alert>}
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="#" as="span">
-              <Link style={padding} to="/">
-                home
-              </Link>
-            </Nav.Link>
-            <Nav.Link href="#" as="span">
-              <Link style={padding} to="/notes">
-                notes
-              </Link>
-            </Nav.Link>
-            <Nav.Link href="#" as="span">
-              <Link style={padding} to="/users">
-                users
-              </Link>
-            </Nav.Link>
-            <Nav.Link href="#" as="span">
-              {user ? (
-                <em>{user} logged</em>
-              ) : (
-                <Link style={padding} to="/login">
-                  login
-                </Link>
-              )}
-            </Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
+    <Container>
+      {message && <Alert severity="success">{message}</Alert>}
+      <AppBar position="static">
+        <IconButton edge="start" color="inherit" aria-label="menu"></IconButton>
+        <Toolbar>
+          <Button color="inherit" component={Link}>
+            home
+          </Button>
+          <Button color="inherit" component={Link}>
+            notes
+          </Button>
+          <Button color="inherit" component={Link}>
+            users
+          </Button>
+          <Button color="inherit" component={Link}>
+            {user ? <em>{user} logged</em> : login}
+          </Button>
+        </Toolbar>
+      </AppBar>
 
       <Routes>
         <Route path="/notes/:id" element={<Note note={note} />} />
@@ -88,7 +80,7 @@ const App = () => {
         <br />
         <em>Note app, Department of Computer Science 2024</em>
       </footer>
-    </div>
+    </Container>
   )
 }
 
