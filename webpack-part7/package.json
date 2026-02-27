@@ -8,13 +8,16 @@
     "license": "MIT",
     "devDependencies": {
         "@babel/core": "^7.29.0",
+        "@babel/preset-env": "^7.29.0",
         "@babel/preset-react": "^7.28.5",
         "babel-loader": "^10.0.0",
         "webpack": "^5.105.3",
         "webpack-cli": "^6.0.1"
     },
     "dependencies": {
+        "core-js": "^3.48.0",
         "react": "^19.2.4",
-        "react-dom": "^19.2.4"
+        "react-dom": "^19.2.4",
+        "regenerator-runtime": "^0.14.1"
     }
 }
