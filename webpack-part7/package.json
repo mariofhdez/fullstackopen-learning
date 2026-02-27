@@ -3,8 +3,9 @@
     "version": "0.0.1",
     "description": "Practising webpack",
     "scripts": {
-        "build": "webpack --mode=development",
-        "start": "webpack serve --mode=development"
+        "build": "webpack --mode=production",
+        "start": "webpack serve --mode=development",
+        "server": "json-server -p 3001 --watch db.json"
     },
     "license": "MIT",
     "devDependencies": {
@@ -13,12 +14,14 @@
         "@babel/preset-react": "^7.28.5",
         "babel-loader": "^10.0.0",
         "css-loader": "^7.1.4",
+        "json-server": "^1.0.0-beta.10",
         "style-loader": "^4.0.0",
         "webpack": "^5.105.3",
         "webpack-cli": "^6.0.1",
         "webpack-dev-server": "^5.2.3"
     },
     "dependencies": {
+        "axios": "^1.13.5",
         "core-js": "^3.48.0",
         "react": "^19.2.4",
         "react-dom": "^19.2.4",
